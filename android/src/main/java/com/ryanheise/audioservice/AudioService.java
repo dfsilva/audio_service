@@ -353,6 +353,7 @@ public class AudioService extends MediaBrowserServiceCompat implements AudioMana
 		mediaSession = new MediaSessionCompat(this, "media-session");
 		mediaSession.setMediaButtonReceiver(null); // TODO: Make this configurable
 		mediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
+
 		PlaybackStateCompat.Builder stateBuilder = new PlaybackStateCompat.Builder()
 				.setActions(PlaybackStateCompat.ACTION_PLAY);
 		mediaSession.setPlaybackState(stateBuilder.build());

@@ -107,6 +107,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 final queue = screenState?.queue;
                 final mediaItem = screenState?.mediaItem;
                 final state = screenState?.playbackState;
+
                 final basicState = state?.basicState ?? BasicPlaybackState.none;
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -182,14 +183,27 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   RaisedButton startButton(String label, Function entrypoint) => RaisedButton(
         child: Text(label),
-        onPressed: () {
-          AudioService.start(
+        onPressed: () async {
+          bool started  = await AudioService.start(
             backgroundTaskEntrypoint: entrypoint,
             resumeOnClick: true,
             androidNotificationChannelName: 'Audio Service Demo',
             notificationColor: 0xFF2196f3,
             androidNotificationIcon: 'mipmap/ic_launcher',
+            enableQueue: true
           );
+
+          if(started){
+            AudioService.addQueueItem( MediaItem(
+              id: "https://s3.amazonaws.com/scifri-episodes/scifri20181123-episode.mp3",
+              album: "Science Friday",
+              title: "A Salute To Head-Scratching Science",
+              artist: "Science Friday and WNYC Studios",
+              duration: 5739820,
+              artUri:
+              "https://media.wnyc.org/i/1400/1400/l/80/1/ScienceFriday_WNYCStudios_1400.jpg",
+            ));
+          }
         },
       );
 
