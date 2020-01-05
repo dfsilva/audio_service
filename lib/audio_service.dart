@@ -500,7 +500,7 @@ class AudioService {
       bool shouldPreloadArtwork = false,
       bool androidStopForegroundOnPause = false,
       bool enableQueue = false,
-      Map<String, String> initParams}) async {
+      Map<String, dynamic> initParams}) async {
     final ui.CallbackHandle handle = ui.PluginUtilities.getCallbackHandle(backgroundTaskEntrypoint);
     if (handle == null) {
       return false;

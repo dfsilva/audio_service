@@ -55,7 +55,7 @@ public class AudioServicePlugin {
 	private static volatile Result startResult;
 	private static String subscribedParentMediaId;
 	private static long bootTime;
-	private static volatile Map<String, String> initParams;
+	private static volatile Map<String, Object> initParams;
 
 	static {
 		bootTime = System.currentTimeMillis() - SystemClock.elapsedRealtime();
@@ -196,7 +196,7 @@ public class AudioServicePlugin {
 				boolean shouldPreloadArtwork = (Boolean)arguments.get("shouldPreloadArtwork");
 				final boolean enableQueue = (Boolean)arguments.get("enableQueue");
 				final boolean androidStopForegroundOnPause = (Boolean)arguments.get("androidStopForegroundOnPause");
-				initParams = (Map<String,String>) arguments.get("initParams");
+				initParams = (Map<String,Object>) arguments.get("initParams");
 
 				Log.i(AudioServicePlugin.class.getName(), "initParams: "+initParams);
 
