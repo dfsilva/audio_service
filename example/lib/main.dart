@@ -184,26 +184,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   RaisedButton startButton(String label, Function entrypoint) => RaisedButton(
         child: Text(label),
         onPressed: () async {
-          bool started  = await AudioService.start(
+          await AudioService.start(
             backgroundTaskEntrypoint: entrypoint,
             resumeOnClick: true,
             androidNotificationChannelName: 'Audio Service Demo',
             notificationColor: 0xFF2196f3,
             androidNotificationIcon: 'mipmap/ic_launcher',
-            enableQueue: true
+            enableQueue: true,
+            initParams: {"teste":"teste"}
           );
 
-          if(started){
-            AudioService.addQueueItem( MediaItem(
-              id: "https://s3.amazonaws.com/scifri-episodes/scifri20181123-episode.mp3",
-              album: "Science Friday",
-              title: "A Salute To Head-Scratching Science",
-              artist: "Science Friday and WNYC Studios",
-              duration: 5739820,
-              artUri:
-              "https://media.wnyc.org/i/1400/1400/l/80/1/ScienceFriday_WNYCStudios_1400.jpg",
-            ));
-          }
         },
       );
 
@@ -332,7 +322,8 @@ class AudioPlayerTask extends BackgroundAudioTask {
   }
 
   @override
-  Future<void> onStart() async {
+  Future<void> onStart(Map params) async {
+    print(params);
     var playerStateSubscription = _audioPlayer.playbackStateStream
         .where((state) => state == AudioPlaybackState.completed)
         .listen((state) {
@@ -486,7 +477,7 @@ class TextPlayerTask extends BackgroundAudioTask {
   BasicPlaybackState get _basicState => AudioServiceBackground.state.basicState;
 
   @override
-  Future<void> onStart() async {
+  Future<void> onStart(Map params) async {
     playPause();
     for (var i = 1; i <= 10 && _basicState != BasicPlaybackState.stopped; i++) {
       AudioServiceBackground.setMediaItem(mediaItem(i));

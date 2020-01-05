@@ -18,6 +18,7 @@ import android.support.v4.media.RatingCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,6 +55,7 @@ public class AudioServicePlugin {
 	private static volatile Result startResult;
 	private static String subscribedParentMediaId;
 	private static long bootTime;
+	private static volatile Map<String, String> initParams;
 
 	static {
 		bootTime = System.currentTimeMillis() - SystemClock.elapsedRealtime();
@@ -194,6 +196,9 @@ public class AudioServicePlugin {
 				boolean shouldPreloadArtwork = (Boolean)arguments.get("shouldPreloadArtwork");
 				final boolean enableQueue = (Boolean)arguments.get("enableQueue");
 				final boolean androidStopForegroundOnPause = (Boolean)arguments.get("androidStopForegroundOnPause");
+				initParams = (Map<String,String>) arguments.get("initParams");
+
+				Log.i(AudioServicePlugin.class.getName(), "initParams: "+initParams);
 
 				final String appBundlePath = FlutterMain.findAppBundlePath(application);
 				Activity activity = application.getCurrentActivity();
@@ -561,7 +566,7 @@ public class AudioServicePlugin {
 			FlutterApplication application = (FlutterApplication)context.getApplicationContext();
 			switch (call.method) {
 			case "ready":
-				result.success(true);
+				result.success(initParams);
 				sendStartResult(true);
 				// If the client subscribed to browse children before we
 				// started, process the pending request.
