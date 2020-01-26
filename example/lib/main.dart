@@ -107,7 +107,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 final queue = screenState?.queue;
                 final mediaItem = screenState?.mediaItem;
                 final state = screenState?.playbackState;
-
                 final basicState = state?.basicState ?? BasicPlaybackState.none;
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -175,26 +174,35 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     );
   }
 
-  RaisedButton audioPlayerButton() =>
-      startButton('AudioPlayer', _audioPlayerTaskEntrypoint);
-
-  RaisedButton textToSpeechButton() =>
-      startButton('TextToSpeech', _textToSpeechTaskEntrypoint);
-
-  RaisedButton startButton(String label, Function entrypoint) => RaisedButton(
-        child: Text(label),
-        onPressed: () async {
-          await AudioService.start(
-            backgroundTaskEntrypoint: entrypoint,
-            resumeOnClick: true,
+  RaisedButton audioPlayerButton() => startButton(
+        'AudioPlayer',
+        () {
+          AudioService.start(
+            backgroundTaskEntrypoint: _audioPlayerTaskEntrypoint,
             androidNotificationChannelName: 'Audio Service Demo',
             notificationColor: 0xFF2196f3,
             androidNotificationIcon: 'mipmap/ic_launcher',
             enableQueue: true,
-            initParams: {"teste":"teste"}
           );
-
         },
+      );
+
+  RaisedButton textToSpeechButton() => startButton(
+        'TextToSpeech',
+        () {
+          AudioService.start(
+            backgroundTaskEntrypoint: _textToSpeechTaskEntrypoint,
+            androidNotificationChannelName: 'Audio Service Demo',
+            notificationColor: 0xFF2196f3,
+            androidNotificationIcon: 'mipmap/ic_launcher',
+          );
+        },
+      );
+
+  RaisedButton startButton(String label, VoidCallback onPressed) =>
+      RaisedButton(
+        child: Text(label),
+        onPressed: onPressed,
       );
 
   IconButton playButton() => IconButton(
@@ -322,8 +330,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
   }
 
   @override
-  Future<void> onStart(Map params) async {
-    print(params);
+  Future<void> onStart() async {
     var playerStateSubscription = _audioPlayer.playbackStateStream
         .where((state) => state == AudioPlaybackState.completed)
         .listen((state) {
@@ -477,7 +484,7 @@ class TextPlayerTask extends BackgroundAudioTask {
   BasicPlaybackState get _basicState => AudioServiceBackground.state.basicState;
 
   @override
-  Future<void> onStart(Map params) async {
+  Future<void> onStart() async {
     playPause();
     for (var i = 1; i <= 10 && _basicState != BasicPlaybackState.stopped; i++) {
       AudioServiceBackground.setMediaItem(mediaItem(i));
