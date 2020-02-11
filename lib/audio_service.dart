@@ -500,8 +500,11 @@ class AudioService {
       bool shouldPreloadArtwork = false,
       bool androidStopForegroundOnPause = false,
       bool enableQueue = false,
-      Map<String, dynamic> initParams}) async {
-    final ui.CallbackHandle handle = ui.PluginUtilities.getCallbackHandle(backgroundTaskEntrypoint);
+      Map<String, dynamic> initParams,
+        bool androidStopOnRemoveTask = false
+      }) async {
+    final ui.CallbackHandle handle =
+        ui.PluginUtilities.getCallbackHandle(backgroundTaskEntrypoint);
     if (handle == null) {
       return false;
     }
@@ -531,7 +534,8 @@ class AudioService {
       'shouldPreloadArtwork': shouldPreloadArtwork,
       'androidStopForegroundOnPause': androidStopForegroundOnPause,
       'enableQueue': enableQueue,
-      'initParams': initParams
+      'initParams': initParams,
+      'androidStopOnRemoveTask': androidStopOnRemoveTask,
     });
   }
 

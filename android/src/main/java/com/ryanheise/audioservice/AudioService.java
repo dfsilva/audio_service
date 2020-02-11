@@ -41,6 +41,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import android.os.Handler;
+import android.os.Looper;
 import java.util.Set;
 
 public class AudioService extends MediaBrowserServiceCompat implements AudioManager.OnAudioFocusChangeListener {
@@ -67,13 +69,14 @@ public class AudioService extends MediaBrowserServiceCompat implements AudioMana
 	static boolean androidNotificationOngoing;
 	static boolean shouldPreloadArtwork;
 	static boolean androidStopForegroundOnPause;
+	static boolean androidStopOnRemoveTask;
 	private static List<MediaSessionCompat.QueueItem> queue = new ArrayList<MediaSessionCompat.QueueItem>();
 	private static int queueIndex = -1;
 	private static Map<String,MediaMetadataCompat> mediaMetadataCache = new HashMap<>();
 	private static Set<String> artUriBlacklist = new HashSet<>();
 	private static Map<String,Bitmap> artBitmapCache = new HashMap<>(); // TODO: old bitmaps should expire FIFO
 
-	public static synchronized void init(Activity activity, boolean resumeOnClick, String androidNotificationChannelName, String androidNotificationChannelDescription, Integer notificationColor, String androidNotificationIcon, boolean androidNotificationClickStartsActivity, boolean androidNotificationOngoing, boolean shouldPreloadArtwork, boolean androidStopForegroundOnPause, ServiceListener listener) {
+	public static void init(Activity activity, boolean resumeOnClick, String androidNotificationChannelName, String androidNotificationChannelDescription, Integer notificationColor, String androidNotificationIcon, boolean androidNotificationClickStartsActivity, boolean androidNotificationOngoing, boolean shouldPreloadArtwork, boolean androidStopForegroundOnPause, boolean androidStopOnRemoveTask, ServiceListener listener) {
 		if (running)
 			throw new IllegalStateException("AudioService already running");
 		running = true;
@@ -91,6 +94,7 @@ public class AudioService extends MediaBrowserServiceCompat implements AudioMana
 		AudioService.androidNotificationOngoing = androidNotificationOngoing;
 		AudioService.shouldPreloadArtwork = shouldPreloadArtwork;
 		AudioService.androidStopForegroundOnPause = androidStopForegroundOnPause;
+		AudioService.androidStopOnRemoveTask = androidStopOnRemoveTask;
 	}
 
 	public void stop() {
@@ -118,7 +122,7 @@ public class AudioService extends MediaBrowserServiceCompat implements AudioMana
 		stopSelf();
 	}
 
-	public static synchronized boolean isRunning() {
+	public static boolean isRunning() {
 		return running;
 	}
 
@@ -133,6 +137,7 @@ public class AudioService extends MediaBrowserServiceCompat implements AudioMana
 	private MediaMetadataCompat mediaMetadata;
 	private Object audioFocusRequest;
 	private String notificationChannelId;
+	private Handler handler = new Handler(Looper.getMainLooper());
 
 	int getResourceId(String resource) {
 		String[] parts = resource.split("/");
@@ -377,9 +382,6 @@ public class AudioService extends MediaBrowserServiceCompat implements AudioMana
 	}
 
 	void preloadArtwork(final List<MediaSessionCompat.QueueItem> queue) {
-		// XXX: Although this happens in a thread, it seems to cause a block
-		// somewhere in the Flutter engine, temporarily preventing messages from
-		// being passed over platform channels.
 		new Thread() {
 			@Override
 			public void run() {
@@ -395,7 +397,8 @@ public class AudioService extends MediaBrowserServiceCompat implements AudioMana
 		}.start();
 	}
 
-	synchronized void setMetadata(final MediaMetadataCompat mediaMetadata) {
+	// Call only on main thread
+	void setMetadata(final MediaMetadataCompat mediaMetadata) {
 		this.mediaMetadata = mediaMetadata;
 		mediaSession.setMetadata(mediaMetadata);
 		updateNotification();
@@ -410,6 +413,7 @@ public class AudioService extends MediaBrowserServiceCompat implements AudioMana
 		}
 	}
 
+	// Must not be called on the main thread
 	synchronized void loadArtBitmap(MediaMetadataCompat mediaMetadata) {
 		if (needToLoadArt(mediaMetadata)) {
 			Uri artUri = mediaMetadata.getDescription().getIconUri();
@@ -437,14 +441,19 @@ public class AudioService extends MediaBrowserServiceCompat implements AudioMana
 				}
 			}
 			String mediaId = mediaMetadata.getDescription().getMediaId();
-			mediaMetadata = new MediaMetadataCompat.Builder(mediaMetadata)
+			final MediaMetadataCompat updatedMediaMetadata = new MediaMetadataCompat.Builder(mediaMetadata)
 				.putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, bitmap)
 				.putBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, bitmap)
 				.build();
-			mediaMetadataCache.put(mediaId, mediaMetadata);
+			mediaMetadataCache.put(mediaId, updatedMediaMetadata);
 			// If this the current media item, update the notification
 			if (this.mediaMetadata != null && mediaId.equals(this.mediaMetadata.getDescription().getMediaId())) {
-				setMetadata(mediaMetadata);
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						setMetadata(updatedMediaMetadata);
+					}
+				});
 			}
 		}
 	}
@@ -485,8 +494,8 @@ public class AudioService extends MediaBrowserServiceCompat implements AudioMana
 	@Override
 	public void onTaskRemoved(Intent rootIntent) {
 		MediaControllerCompat controller = mediaSession.getController();
-		if (androidStopForegroundOnPause && controller.getPlaybackState().getState() == PlaybackStateCompat.STATE_PAUSED) {
-			stopSelf();
+		if (androidStopOnRemoveTask || (androidStopForegroundOnPause && controller.getPlaybackState().getState() == PlaybackStateCompat.STATE_PAUSED)) {
+			listener.onStop();
 		}
 		super.onTaskRemoved(rootIntent);
 	}
@@ -551,8 +560,8 @@ public class AudioService extends MediaBrowserServiceCompat implements AudioMana
 		private void play(Runnable runner) {
 			int result = requestAudioFocus();
 			if (result != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-				// TODO: Handle this more gracefully
-				throw new RuntimeException("Failed to gain audio focus");
+				// Don't play audio
+				return;
 			}
 
 			startService(new Intent(AudioService.this, AudioService.class));
