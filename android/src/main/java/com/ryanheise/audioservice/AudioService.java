@@ -31,6 +31,7 @@ import androidx.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import java.io.IOException;
@@ -311,7 +312,7 @@ public class AudioService extends MediaBrowserServiceCompat implements AudioMana
 		noisyReceiver = null;
 	}
 
-	static MediaMetadataCompat createMediaMetadata(String mediaId, String album, String title, String artist, String genre, Long duration, String artUri, String displayTitle, String displaySubtitle, String displayDescription, RatingCompat rating) {
+	static MediaMetadataCompat createMediaMetadata(String mediaId, String album, String title, String artist, String genre, Long duration, String artUri, Bitmap localArtUri, String displayTitle, String displaySubtitle, String displayDescription, RatingCompat rating) {
 		MediaMetadataCompat.Builder builder = new MediaMetadataCompat.Builder()
 			.putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, mediaId)
 			.putString(MediaMetadataCompat.METADATA_KEY_ALBUM, album)
@@ -322,13 +323,18 @@ public class AudioService extends MediaBrowserServiceCompat implements AudioMana
 			builder.putString(MediaMetadataCompat.METADATA_KEY_GENRE, genre);
 		if (duration != null)
 			builder.putLong(MediaMetadataCompat.METADATA_KEY_DURATION, duration);
-		if (artUri != null) {
+		if (artUri != null && localArtUri == null) {
 			builder.putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON_URI, artUri);
 			Bitmap bitmap = artBitmapCache.get(artUri);
 			if (bitmap != null) {
 				builder.putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, bitmap);
 				builder.putBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, bitmap);
 			}
+		}
+
+		if(localArtUri != null){
+			builder.putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, localArtUri);
+			builder.putBitmap(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, localArtUri);
 		}
 		if (displayTitle != null)
 			builder.putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, displayTitle);
@@ -404,6 +410,7 @@ public class AudioService extends MediaBrowserServiceCompat implements AudioMana
 		updateNotification();
 
 		if (needToLoadArt(mediaMetadata)) {
+			Log.d(AudioService.class.getName(), "Abrindo nova thread para baixar imagem "+mediaMetadata.getDescription().getIconUri());
 			new Thread() {
 				@Override
 				public void run() {

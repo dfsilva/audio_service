@@ -132,9 +132,7 @@ class Rating {
 
   /// Create a new star rating.
   factory Rating.newStartRating(RatingStyle starRatingStyle, int starRating) {
-    if (starRatingStyle != RatingStyle.range3stars &&
-        starRatingStyle != RatingStyle.range4stars &&
-        starRatingStyle != RatingStyle.range5stars) {
+    if (starRatingStyle != RatingStyle.range3stars && starRatingStyle != RatingStyle.range4stars && starRatingStyle != RatingStyle.range5stars) {
       throw ArgumentError();
     }
     if (starRating > starRatingStyle.index || starRating < 0) throw ArgumentError();
@@ -163,8 +161,7 @@ class Rating {
   /// value if the rating style is not star-based, or if it is
   /// unrated.
   int getStarRating() {
-    if (_type != RatingStyle.range3stars && _type != RatingStyle.range4stars && _type != RatingStyle.range5stars)
-      return -1;
+    if (_type != RatingStyle.range3stars && _type != RatingStyle.range4stars && _type != RatingStyle.range5stars) return -1;
     return _value ?? -1;
   }
 
@@ -222,6 +219,8 @@ class MediaItem {
   /// The artwork for this media item as a uri
   final String artUri;
 
+  final String localArtUri;
+
   /// Whether this is playable (i.e. not a folder)
   final bool playable;
 
@@ -245,6 +244,7 @@ class MediaItem {
     this.genre,
     this.duration,
     this.artUri,
+    this.localArtUri,
     this.playable = true,
     this.displayTitle,
     this.displaySubtitle,
@@ -260,6 +260,7 @@ class MediaItem {
     String genre,
     int duration,
     String artUri,
+    String localArtUri,
     bool playable,
     String displayTitle,
     String displaySubtitle,
@@ -274,6 +275,7 @@ class MediaItem {
         genre: genre ?? this.genre,
         duration: duration ?? this.duration,
         artUri: artUri ?? this.artUri,
+        localArtUri: localArtUri ?? this.localArtUri,
         playable: playable ?? this.playable,
         displayTitle: displayTitle ?? this.displayTitle,
         displaySubtitle: displaySubtitle ?? this.displaySubtitle,
@@ -325,6 +327,7 @@ Map _mediaItem2raw(MediaItem mediaItem) => {
       'genre': mediaItem.genre,
       'duration': mediaItem.duration,
       'artUri': mediaItem.artUri,
+      'localArtUri': mediaItem.localArtUri,
       'playable': mediaItem.playable,
       'displayTitle': mediaItem.displayTitle,
       'displaySubtitle': mediaItem.displaySubtitle,
@@ -501,10 +504,8 @@ class AudioService {
       bool androidStopForegroundOnPause = false,
       bool enableQueue = false,
       Map<String, dynamic> initParams,
-        bool androidStopOnRemoveTask = false
-      }) async {
-    final ui.CallbackHandle handle =
-        ui.PluginUtilities.getCallbackHandle(backgroundTaskEntrypoint);
+      bool androidStopOnRemoveTask = false}) async {
+    final ui.CallbackHandle handle = ui.PluginUtilities.getCallbackHandle(backgroundTaskEntrypoint);
     if (handle == null) {
       return false;
     }
@@ -847,8 +848,8 @@ class AudioServiceBackground {
             })
         .toList();
     final rawSystemActions = systemActions.map((action) => action.index).toList();
-    await _backgroundChannel.invokeMethod('setState',
-        [rawControls, rawSystemActions, basicState.index, position, speed, updateTime, androidCompactActions]);
+    await _backgroundChannel
+        .invokeMethod('setState', [rawControls, rawSystemActions, basicState.index, position, speed, updateTime, androidCompactActions]);
   }
 
   /// Sets the current queue and notifies all clients.

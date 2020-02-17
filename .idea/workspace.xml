@@ -2,16 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cec1e7f7-75f1-4c74-b170-418f2e526870" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/caches/gradle_models.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/java/com/ryanheise/audioservice/AudioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/ryanheise/audioservice/AudioService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/AudioServicePlugin.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/AudioServicePlugin.m" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/audio_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/audio_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,38 +22,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/audio_service.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11835">
-              <caret line="796" column="35" selection-start-line="796" selection-start-column="35" selection-end-line="796" selection-end-column="35" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/android/app/build.gradle">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/android/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6325">
-              <caret line="465" selection-start-line="465" selection-end-line="465" />
+            <state relative-caret-position="239">
+              <caret line="388" column="33" selection-start-line="388" selection-start-column="33" selection-end-line="388" selection-end-column="33" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -65,9 +33,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pubspec.yaml">
-          <provider selected="true" editor-type-id="text-editor" />
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/audio_service.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="200">
+              <caret line="328" column="31" lean-forward="true" selection-start-line="328" selection-start-column="31" selection-end-line="328" selection-end-column="31" />
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -87,6 +59,7 @@
       <find>onSetInitParams</find>
       <find>onStart</find>
       <find>_playbackStateSubject</find>
+      <find>setMediaItem</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -100,39 +73,19 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
-    <option name="width" value="1756" />
-    <option name="height" value="1045" />
+    <option name="width" value="1920" />
+    <option name="height" value="1177" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="audio_service" type="b2602c69:ProjectViewProjectNode" />
-              <item name="audio_service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="audio_service" type="b2602c69:ProjectViewProjectNode" />
-              <item name="audio_service" type="462c0819:PsiDirectoryNode" />
-              <item name="android" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="audio_service" type="b2602c69:ProjectViewProjectNode" />
-              <item name="audio_service" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -181,14 +134,21 @@
       <option name="project" value="LOCAL" />
       <updated>1580061613271</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Merge branch 'master' of https://github.com/ryanheise/audio_service&#10;&#10;# Conflicts:&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java&#10;#&#9;lib/audio_service.dart">
+      <created>1581461335368</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1581461335368</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1756" height="1045" extended-state="0" />
+    <frame x="0" y="23" width="1920" height="1177" extended-state="6" />
     <layout>
       <window_info id="Captures" order="0" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.16802801" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.15654951" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
@@ -201,7 +161,7 @@
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3654267" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32932165" />
       <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="6" visible="true" weight="0.32843652" />
+      <window_info anchor="bottom" id="Version Control" order="6" visible="true" weight="0.28847927" />
       <window_info anchor="bottom" id="Messages" order="7" weight="0.32948583" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
       <window_info anchor="right" id="Theme Preview" order="1" />
@@ -245,18 +205,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Merge branch 'master' of https://github.com/ryanheise/audio_service&#10;&#10;# Conflicts:&#10;#&#9;example/lib/main.dart" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.com/ryanheise/audio_service&#10;&#10;# Conflicts:&#10;#&#9;example/lib/main.dart" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/example/lib/main.dart</url>
-          <line>189</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Merge branch 'master' of https://github.com/ryanheise/audio_service&#10;&#10;# Conflicts:&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java&#10;#&#9;lib/audio_service.dart" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.com/ryanheise/audio_service&#10;&#10;# Conflicts:&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java&#10;#&#9;lib/audio_service.dart" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/android/src/main/java/com/ryanheise/audioservice/AudioService.java">
@@ -280,13 +230,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/example/android/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/pubspec.yaml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/android/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6325">
-          <caret line="465" selection-start-line="465" selection-end-line="465" />
+        <state relative-caret-position="239">
+          <caret line="388" column="33" selection-start-line="388" selection-start-column="33" selection-end-line="388" selection-end-column="33" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
@@ -295,21 +258,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/audio_service.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11835">
-          <caret line="796" column="35" selection-start-line="796" selection-start-column="35" selection-end-line="796" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/android/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/android/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        <state relative-caret-position="200">
+          <caret line="328" column="31" lean-forward="true" selection-start-line="328" selection-start-column="31" selection-end-line="328" selection-end-column="31" />
         </state>
       </provider>
     </entry>
