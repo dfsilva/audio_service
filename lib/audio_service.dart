@@ -79,7 +79,10 @@ class PlaybackState {
   /// The current playback position in milliseconds
   int get currentPosition {
     if (basicState == BasicPlaybackState.playing) {
-      return position + DateTime.now().millisecondsSinceEpoch - updateTime;
+      return (position +
+              ((DateTime.now().millisecondsSinceEpoch - updateTime) *
+                  (speed ?? 1.0)))
+          .toInt();
     } else {
       return position;
     }
@@ -368,6 +371,9 @@ class AudioService {
 
   static final _browseMediaChildrenSubject = BehaviorSubject<List<MediaItem>>();
 
+  /// An instance of flutter isolate
+  static FlutterIsolate _flutterIsolate;
+
   /// A stream that broadcasts the children of the current browse
   /// media parent.
   static Stream<List<MediaItem>> get browseMediaChildrenStream => _browseMediaChildrenSubject.stream;
@@ -430,11 +436,15 @@ class AudioService {
           _playbackStateSubject.add(_playbackState);
           break;
         case 'onMediaChanged':
-          _currentMediaItem = call.arguments[0] != null ? _raw2mediaItem(call.arguments[0]) : null;
+          _currentMediaItem = call.arguments[0] != null
+              ? _raw2mediaItem(call.arguments[0])
+              : null;
           _currentMediaItemSubject.add(_currentMediaItem);
           break;
         case 'onQueueChanged':
-          final List<Map> args = call.arguments[0] != null ? List<Map>.from(call.arguments[0]) : null;
+          final List<Map> args = call.arguments[0] != null
+              ? List<Map>.from(call.arguments[0])
+              : null;
           _queue = args?.map(_raw2mediaItem)?.toList();
           _queueSubject.add(_queue);
           break;
@@ -521,7 +531,7 @@ class AudioService {
       // TODO: remove dependency on flutter_isolate by either using the
       // FlutterNativeView API directly or by waiting until Flutter allows
       // regular isolates to use method channels.
-      await FlutterIsolate.spawn(_iosIsolateEntrypoint, callbackHandle);
+      AudioService._flutterIsolate = await FlutterIsolate.spawn(_iosIsolateEntrypoint, callbackHandle);
     }
     return await _channel.invokeMethod('start', {
       'callbackHandle': callbackHandle,
@@ -798,7 +808,7 @@ class AudioServiceBackground {
     await task.onStart(initParams);
     await _backgroundChannel.invokeMethod('stopped');
     if (Platform.isIOS) {
-      FlutterIsolate.current.kill();
+      AudioService._flutterIsolate?.kill();
     }
     _backgroundChannel.setMethodCallHandler(null);
     _state = _noneState;
@@ -847,9 +857,17 @@ class AudioServiceBackground {
               'action': control.action.index,
             })
         .toList();
-    final rawSystemActions = systemActions.map((action) => action.index).toList();
-    await _backgroundChannel
-        .invokeMethod('setState', [rawControls, rawSystemActions, basicState.index, position, speed, updateTime, androidCompactActions]);
+    final rawSystemActions =
+        systemActions.map((action) => action.index).toList();
+    await _backgroundChannel.invokeMethod('setState', [
+      rawControls,
+      rawSystemActions,
+      basicState.index,
+      position,
+      speed,
+      updateTime,
+      androidCompactActions
+    ]);
   }
 
   /// Sets the current queue and notifies all clients.

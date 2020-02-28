@@ -565,76 +565,64 @@ public class AudioServicePlugin implements FlutterPlugin, ActivityAware {
                 init(executor);
                 DartCallback dartCallback = new DartCallback(context.getAssets(), appBundlePath, cb);
 
-                executor.executeDartCallback(dartCallback);
-            } else
-                invokeMethod("onPlay");
-        }
-
-        @Override
-        public void onPlayFromMediaId(String mediaId) {
-            invokeMethod("onPlayFromMediaId", mediaId);
-        }
-
-        @Override
-        public void onStop() {
-            invokeMethod("onStop");
-        }
-
-        @Override
-        public void onAddQueueItem(MediaMetadataCompat metadata) {
-            invokeMethod("onAddQueueItem", mediaMetadata2raw(metadata));
-        }
-
-        @Override
-        public void onAddQueueItemAt(MediaMetadataCompat metadata, int index) {
-            invokeMethod("onAddQueueItem", mediaMetadata2raw(metadata), index);
-        }
-
-        @Override
-        public void onRemoveQueueItem(MediaMetadataCompat metadata) {
-            invokeMethod("onRemoveQueueItem", mediaMetadata2raw(metadata));
-        }
-
-        @Override
-        public void onSkipToQueueItem(long queueItemId) {
-            String mediaId = queueMediaIds.get((int) queueItemId);
-            invokeMethod("onSkipToQueueItem", mediaId);
-        }
-
-        @Override
-        public void onSkipToNext() {
-            invokeMethod("onSkipToNext");
-        }
-
-        @Override
-        public void onSkipToPrevious() {
-            invokeMethod("onSkipToPrevious");
-        }
-
-        @Override
-        public void onFastForward() {
-            invokeMethod("onFastForward");
-        }
-
-        @Override
-        public void onRewind() {
-            invokeMethod("onRewind");
-        }
-
-        @Override
-        public void onSeekTo(long pos) {
-            invokeMethod("onSeekTo", pos);
-        }
-
-        @Override
-        public void onSetRating(RatingCompat rating) {
-            invokeMethod("onSetRating", rating2raw(rating), null);
-        }
-
-        @Override
-        public void onSetRating(RatingCompat rating, Bundle extras) {
-            invokeMethod("onSetRating", rating2raw(rating), extras.getSerializable("extrasMap"));
-        }
+				executor.executeDartCallback(dartCallback);
+			}
+			else
+				invokeMethod("onPlay");
+		}
+		@Override
+		public void onPlayFromMediaId(String mediaId) {
+			invokeMethod("onPlayFromMediaId", mediaId);
+		}
+		@Override
+		public void onStop() {
+			invokeMethod("onStop");
+		}
+		@Override
+		public void onAddQueueItem(MediaMetadataCompat metadata) {
+			invokeMethod("onAddQueueItem", mediaMetadata2raw(metadata));
+		}
+		@Override
+		public void onAddQueueItemAt(MediaMetadataCompat metadata, int index) {
+			invokeMethod("onAddQueueItemAt", mediaMetadata2raw(metadata), index);
+		}
+		@Override
+		public void onRemoveQueueItem(MediaMetadataCompat metadata) {
+			invokeMethod("onRemoveQueueItem", mediaMetadata2raw(metadata));
+		}
+		@Override
+		public void onSkipToQueueItem(long queueItemId) {
+			String mediaId = queueMediaIds.get((int)queueItemId);
+			invokeMethod("onSkipToQueueItem", mediaId);
+		}
+		@Override
+		public void onSkipToNext() {
+			invokeMethod("onSkipToNext");
+		}
+		@Override
+		public void onSkipToPrevious() {
+			invokeMethod("onSkipToPrevious");
+		}
+		@Override
+		public void onFastForward() {
+			invokeMethod("onFastForward");
+		}
+		@Override
+		public void onRewind() {
+			invokeMethod("onRewind");
+		}
+		@Override
+		public void onSeekTo(long pos) {
+			invokeMethod("onSeekTo", pos);
+		}
+		@Override
+		public void onSetRating(RatingCompat rating) {
+			invokeMethod("onSetRating", rating2raw(rating), null);
+		}
+		@Override
+		public void onSetRating(RatingCompat rating, Bundle extras) {
+			invokeMethod("onSetRating", rating2raw(rating), extras.getSerializable("extrasMap"));
+		}
 
         @Override
         public void onMethodCall(MethodCall call, Result result) {
