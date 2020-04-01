@@ -246,17 +246,15 @@ public class AudioServicePlugin implements FlutterPlugin, ActivityAware {
                     String androidNotificationChannelDescription = (String) arguments.get("androidNotificationChannelDescription");
                     Integer notificationColor = arguments.get("notificationColor") == null ? null : getInt(arguments.get("notificationColor"));
                     String androidNotificationIcon = (String) arguments.get("androidNotificationIcon");
-                    boolean shouldPreloadArtwork = (Boolean) arguments.get("shouldPreloadArtwork");
                     final boolean enableQueue = (Boolean) arguments.get("enableQueue");
                     final boolean androidStopForegroundOnPause = (Boolean) arguments.get("androidStopForegroundOnPause");
-                    initParams = (Map<String, Object>) arguments.get("initParams");
-
-                    Log.i(AudioServicePlugin.class.getName(), "initParams: " + initParams);
                     final boolean androidStopOnRemoveTask = (Boolean) arguments.get("androidStopOnRemoveTask");
+
+                    initParams = (Map<String, Object>) arguments.get("initParams");
 
                     final String appBundlePath = FlutterMain.findAppBundlePath(context.getApplicationContext());
                     backgroundHandler = new BackgroundHandler(callbackHandle, appBundlePath, enableQueue);
-                    AudioService.init(activity, resumeOnClick, androidNotificationChannelName, androidNotificationChannelDescription, notificationColor, androidNotificationIcon, androidNotificationClickStartsActivity, androidNotificationOngoing, shouldPreloadArtwork, androidStopForegroundOnPause, androidStopOnRemoveTask, backgroundHandler);
+                    AudioService.init(activity, resumeOnClick, androidNotificationChannelName, androidNotificationChannelDescription, notificationColor, androidNotificationIcon, androidNotificationClickStartsActivity, androidNotificationOngoing, androidStopForegroundOnPause, androidStopOnRemoveTask, backgroundHandler);
 
                     synchronized (connectionCallback) {
                         if (mediaController != null)
@@ -802,49 +800,63 @@ public class AudioServicePlugin implements FlutterPlugin, ActivityAware {
         return raw;
     }
 
-    private static Map<?, ?> mediaMetadata2raw(MediaMetadataCompat mediaMetadata) {
-        if (mediaMetadata == null) return null;
-        MediaDescriptionCompat description = mediaMetadata.getDescription();
-        Map<String, Object> raw = new HashMap<String, Object>();
-        raw.put("id", description.getMediaId());
-        raw.put("album", mediaMetadata.getText(MediaMetadataCompat.METADATA_KEY_ALBUM).toString());
-        raw.put("title", mediaMetadata.getText(MediaMetadataCompat.METADATA_KEY_TITLE).toString());
-        if (description.getIconUri() != null)
-            raw.put("artUri", description.getIconUri().toString());
-        if (mediaMetadata.containsKey(MediaMetadataCompat.METADATA_KEY_ARTIST))
-            raw.put("artist", mediaMetadata.getText(MediaMetadataCompat.METADATA_KEY_ARTIST).toString());
-        if (mediaMetadata.containsKey(MediaMetadataCompat.METADATA_KEY_GENRE))
-            raw.put("genre", mediaMetadata.getText(MediaMetadataCompat.METADATA_KEY_GENRE).toString());
-        if (mediaMetadata.containsKey(MediaMetadataCompat.METADATA_KEY_DURATION))
-            raw.put("duration", mediaMetadata.getLong(MediaMetadataCompat.METADATA_KEY_DURATION));
-        if (mediaMetadata.containsKey(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE))
-            raw.put("displayTitle", mediaMetadata.getText(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE).toString());
-        if (mediaMetadata.containsKey(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE))
-            raw.put("displaySubtitle", mediaMetadata.getText(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE).toString());
-        if (mediaMetadata.containsKey(MediaMetadataCompat.METADATA_KEY_DISPLAY_DESCRIPTION))
-            raw.put("displayDescription", mediaMetadata.getText(MediaMetadataCompat.METADATA_KEY_DISPLAY_DESCRIPTION).toString());
-        if (mediaMetadata.containsKey(MediaMetadataCompat.METADATA_KEY_RATING)) {
-            raw.put("rating", rating2raw(mediaMetadata.getRating(MediaMetadataCompat.METADATA_KEY_RATING)));
-        }
-        return raw;
-    }
+	private static Map<?,?> mediaMetadata2raw(MediaMetadataCompat mediaMetadata) {
+		if (mediaMetadata == null) return null;
+		MediaDescriptionCompat description = mediaMetadata.getDescription();
+		Map<String,Object> raw = new HashMap<String,Object>();
+		raw.put("id", description.getMediaId());
+		raw.put("album", mediaMetadata.getText(MediaMetadataCompat.METADATA_KEY_ALBUM).toString());
+		raw.put("title", mediaMetadata.getText(MediaMetadataCompat.METADATA_KEY_TITLE).toString());
+		if (description.getIconUri() != null)
+			raw.put("artUri", description.getIconUri().toString());
+		if (mediaMetadata.containsKey(MediaMetadataCompat.METADATA_KEY_ARTIST))
+			raw.put("artist", mediaMetadata.getText(MediaMetadataCompat.METADATA_KEY_ARTIST).toString());
+		if (mediaMetadata.containsKey(MediaMetadataCompat.METADATA_KEY_GENRE))
+			raw.put("genre", mediaMetadata.getText(MediaMetadataCompat.METADATA_KEY_GENRE).toString());
+		if (mediaMetadata.containsKey(MediaMetadataCompat.METADATA_KEY_DURATION))
+			raw.put("duration", mediaMetadata.getLong(MediaMetadataCompat.METADATA_KEY_DURATION));
+		if (mediaMetadata.containsKey(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE))
+			raw.put("displayTitle", mediaMetadata.getText(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE).toString());
+		if (mediaMetadata.containsKey(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE))
+			raw.put("displaySubtitle", mediaMetadata.getText(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE).toString());
+		if (mediaMetadata.containsKey(MediaMetadataCompat.METADATA_KEY_DISPLAY_DESCRIPTION))
+			raw.put("displayDescription", mediaMetadata.getText(MediaMetadataCompat.METADATA_KEY_DISPLAY_DESCRIPTION).toString());
+		if (mediaMetadata.containsKey(MediaMetadataCompat.METADATA_KEY_RATING)) {
+			raw.put("rating", rating2raw(mediaMetadata.getRating(MediaMetadataCompat.METADATA_KEY_RATING)));
+		}
+		Map<String, Object> extras = new HashMap<>();
+		for (String key : mediaMetadata.keySet()) {
+			if (key.startsWith("extra_long_")) {
+				String rawKey = key.substring("extra_long_".length());
+				extras.put(rawKey, mediaMetadata.getLong(key));
+			} else if (key.startsWith("extra_string_")) {
+				String rawKey = key.substring("extra_string_".length());
+				extras.put(rawKey, mediaMetadata.getString(key));
+			}
+		}
+		if (extras.size() > 0) {
+			raw.put("extras", extras);
+		}
+		return raw;
+	}
 
-    private static MediaMetadataCompat createMediaMetadata(Map<?, ?> rawMediaItem) {
-        return AudioService.createMediaMetadata(
-                (String) rawMediaItem.get("id"),
-                (String) rawMediaItem.get("album"),
-                (String) rawMediaItem.get("title"),
-                (String) rawMediaItem.get("artist"),
-                (String) rawMediaItem.get("genre"),
-                getLong(rawMediaItem.get("duration")),
-                (String) rawMediaItem.get("artUri"),
+	private static MediaMetadataCompat createMediaMetadata(Map<?,?> rawMediaItem) {
+		return AudioService.createMediaMetadata(
+				(String)rawMediaItem.get("id"),
+				(String)rawMediaItem.get("album"),
+				(String)rawMediaItem.get("title"),
+				(String)rawMediaItem.get("artist"),
+				(String)rawMediaItem.get("genre"),
+				getLong(rawMediaItem.get("duration")),
+				(String)rawMediaItem.get("artUri"),
                 getArtBitmap((String) rawMediaItem.get("localArtUri")),
-                (String) rawMediaItem.get("displayTitle"),
-                (String) rawMediaItem.get("displaySubtitle"),
-                (String) rawMediaItem.get("displayDescription"),
-                raw2rating((Map<String, Object>) rawMediaItem.get("rating"))
-        );
-    }
+				(String)rawMediaItem.get("displayTitle"),
+				(String)rawMediaItem.get("displaySubtitle"),
+				(String)rawMediaItem.get("displayDescription"),
+				raw2rating((Map<String, Object>)rawMediaItem.get("rating")),
+                (Map<?, ?>)rawMediaItem.get("extras")
+				);
+	}
 
     private static Bitmap getArtBitmap(String localResource) {
         if (localResource != null && !localResource.isEmpty())
