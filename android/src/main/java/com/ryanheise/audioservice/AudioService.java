@@ -418,15 +418,6 @@ public class AudioService extends MediaBrowserServiceCompat implements AudioMana
 		this.mediaMetadata = mediaMetadata;
 		mediaSession.setMetadata(mediaMetadata);
 		updateNotification();
-
-		if (needToLoadArt(mediaMetadata)) {
-			new Thread() {
-				@Override
-				public void run() {
-					loadArtBitmap(mediaMetadata);
-				}
-			}.start();
-		}
 	}
 
 	static Bitmap loadArtBitmapFromFile(String path) {

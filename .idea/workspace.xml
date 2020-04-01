@@ -2,17 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cec1e7f7-75f1-4c74-b170-418f2e526870" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/example/ios/Flutter/Flutter.podspec" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/java/com/ryanheise/audioservice/AudioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/ryanheise/audioservice/AudioService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/AudioServicePlugin.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/AudioServicePlugin.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/audio_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/audio_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -109,7 +102,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581461335368</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Merge remote-tracking branch 'upstream/master' into merge1&#10;&#10;# Conflicts:&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioService.java&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java&#10;#&#9;example/.flutter-plugins-dependencies&#10;#&#9;lib/audio_service.dart">
+      <created>1585767791002</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1585767791002</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -142,6 +142,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Merge branch 'master' of https://github.com/ryanheise/audio_service&#10;&#10;# Conflicts:&#10;#&#9;example/lib/main.dart" />
     <MESSAGE value="Merge branch 'master' of https://github.com/ryanheise/audio_service&#10;&#10;# Conflicts:&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java&#10;#&#9;lib/audio_service.dart" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.com/ryanheise/audio_service&#10;&#10;# Conflicts:&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java&#10;#&#9;lib/audio_service.dart" />
+    <MESSAGE value="Merge remote-tracking branch 'upstream/master' into merge1&#10;&#10;# Conflicts:&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioService.java&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java&#10;#&#9;example/.flutter-plugins-dependencies&#10;#&#9;lib/audio_service.dart" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'upstream/master' into merge1&#10;&#10;# Conflicts:&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioService.java&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java&#10;#&#9;example/.flutter-plugins-dependencies&#10;#&#9;lib/audio_service.dart" />
   </component>
 </project>
