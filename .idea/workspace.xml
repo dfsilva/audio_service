@@ -4,8 +4,8 @@
     <list default="true" id="cec1e7f7-75f1-4c74-b170-418f2e526870" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/java/com/ryanheise/audioservice/AudioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/ryanheise/audioservice/AudioService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/audio_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/audio_service.dart" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

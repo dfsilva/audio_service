@@ -126,7 +126,8 @@ class Rating {
   const Rating._internal(this._type, this._value);
 
   /// Create a new heart rating.
-  const Rating.newHeartRating(bool hasHeart) : this._internal(RatingStyle.heart, hasHeart);
+  const Rating.newHeartRating(bool hasHeart)
+      : this._internal(RatingStyle.heart, hasHeart);
 
   /// Create a new percentage rating.
   factory Rating.newPercentageRating(double percent) {
@@ -136,18 +137,23 @@ class Rating {
 
   /// Create a new star rating.
   factory Rating.newStartRating(RatingStyle starRatingStyle, int starRating) {
-    if (starRatingStyle != RatingStyle.range3stars && starRatingStyle != RatingStyle.range4stars && starRatingStyle != RatingStyle.range5stars) {
+    if (starRatingStyle != RatingStyle.range3stars &&
+        starRatingStyle != RatingStyle.range4stars &&
+        starRatingStyle != RatingStyle.range5stars) {
       throw ArgumentError();
     }
-    if (starRating > starRatingStyle.index || starRating < 0) throw ArgumentError();
+    if (starRating > starRatingStyle.index || starRating < 0)
+      throw ArgumentError();
     return Rating._internal(starRatingStyle, starRating);
   }
 
   /// Create a new thumb rating.
-  const Rating.newThumbRating(bool isThumbsUp) : this._internal(RatingStyle.thumbUpDown, isThumbsUp);
+  const Rating.newThumbRating(bool isThumbsUp)
+      : this._internal(RatingStyle.thumbUpDown, isThumbsUp);
 
   /// Create a new unrated rating.
-  const Rating.newUnratedRating(RatingStyle ratingStyle) : this._internal(ratingStyle, null);
+  const Rating.newUnratedRating(RatingStyle ratingStyle)
+      : this._internal(ratingStyle, null);
 
   /// Return the rating style.
   RatingStyle getRatingStyle() => _type;
@@ -165,7 +171,9 @@ class Rating {
   /// value if the rating style is not star-based, or if it is
   /// unrated.
   int getStarRating() {
-    if (_type != RatingStyle.range3stars && _type != RatingStyle.range4stars && _type != RatingStyle.range5stars) return -1;
+    if (_type != RatingStyle.range3stars &&
+        _type != RatingStyle.range4stars &&
+        _type != RatingStyle.range5stars) return -1;
     return _value ?? -1;
   }
 
@@ -196,7 +204,8 @@ class Rating {
   }
 
   // Even though this should take a Map<String, dynamic>, that makes an error.
-  Rating._fromRaw(Map<dynamic, dynamic> raw) : this._internal(RatingStyle.values[raw['type']], raw['value']);
+  Rating._fromRaw(Map<dynamic, dynamic> raw)
+      : this._internal(RatingStyle.values[raw['type']], raw['value']);
 }
 
 /// Metadata about an audio item that can be played, or a folder containing
@@ -329,7 +338,8 @@ class MediaControl {
   });
 }
 
-const MethodChannel _channel = const MethodChannel('ryanheise.com/audioService');
+const MethodChannel _channel =
+    const MethodChannel('ryanheise.com/audioService');
 
 Map _mediaItem2raw(MediaItem mediaItem) => {
       'id': mediaItem.id,
@@ -396,17 +406,20 @@ class AudioService {
 
   /// A stream that broadcasts the children of the current browse
   /// media parent.
-  static Stream<List<MediaItem>> get browseMediaChildrenStream => _browseMediaChildrenSubject.stream;
+  static Stream<List<MediaItem>> get browseMediaChildrenStream =>
+      _browseMediaChildrenSubject.stream;
 
   static final _playbackStateSubject = BehaviorSubject<PlaybackState>();
 
   /// A stream that broadcasts the playback state.
-  static Stream<PlaybackState> get playbackStateStream => _playbackStateSubject.stream;
+  static Stream<PlaybackState> get playbackStateStream =>
+      _playbackStateSubject.stream;
 
   static final _currentMediaItemSubject = BehaviorSubject<MediaItem>();
 
   /// A stream that broadcasts the current [MediaItem].
-  static Stream<MediaItem> get currentMediaItemStream => _currentMediaItemSubject.stream;
+  static Stream<MediaItem> get currentMediaItemStream =>
+      _currentMediaItemSubject.stream;
 
   static final _queueSubject = BehaviorSubject<List<MediaItem>>();
 
@@ -453,7 +466,9 @@ class AudioService {
           int actionBits = args[1];
           _playbackState = PlaybackState(
             basicState: BasicPlaybackState.values[args[0]],
-            actions: MediaAction.values.where((action) => (actionBits & (1 << action.index)) != 0).toSet(),
+            actions: MediaAction.values
+                .where((action) => (actionBits & (1 << action.index)) != 0)
+                .toSet(),
             position: args[2],
             speed: args[3],
             updateTime: args[4],
@@ -537,7 +552,6 @@ class AudioService {
     bool androidNotificationClickStartsActivity = true,
     bool androidNotificationOngoing = false,
     bool resumeOnClick = true,
-    bool shouldPreloadArtwork = false,
     bool androidStopForegroundOnPause = false,
     bool enableQueue = false,
     Map<String, dynamic> initParams,
@@ -571,10 +585,12 @@ class AudioService {
     final success = await _channel.invokeMethod('start', {
       'callbackHandle': callbackHandle,
       'androidNotificationChannelName': androidNotificationChannelName,
-      'androidNotificationChannelDescription': androidNotificationChannelDescription,
+      'androidNotificationChannelDescription':
+          androidNotificationChannelDescription,
       'notificationColor': notificationColor,
       'androidNotificationIcon': androidNotificationIcon,
-      'androidNotificationClickStartsActivity': androidNotificationClickStartsActivity,
+      'androidNotificationClickStartsActivity':
+          androidNotificationClickStartsActivity,
       'androidNotificationOngoing': androidNotificationOngoing,
       'resumeOnClick': resumeOnClick,
       'androidStopForegroundOnPause': androidStopForegroundOnPause,
@@ -590,7 +606,8 @@ class AudioService {
 
   /// Sets the parent of the children that [browseMediaChildrenStream] broadcasts.
   /// If unspecified, the root parent will be used.
-  static Future<void> setBrowseMediaParent([String parentMediaId = MEDIA_ROOT_ID]) async {
+  static Future<void> setBrowseMediaParent(
+      [String parentMediaId = MEDIA_ROOT_ID]) async {
     await _channel.invokeMethod('setBrowseMediaParent', parentMediaId);
   }
 
@@ -601,7 +618,8 @@ class AudioService {
 
   /// Passes through to `onAddQueueItemAt` in the background task.
   static Future<void> addQueueItemAt(MediaItem mediaItem, int index) async {
-    await _channel.invokeMethod('addQueueItemAt', [_mediaItem2raw(mediaItem), index]);
+    await _channel
+        .invokeMethod('addQueueItemAt', [_mediaItem2raw(mediaItem), index]);
   }
 
   /// Passes through to `onRemoveQueueItem` in the background task.
@@ -684,7 +702,8 @@ class AudioService {
 
   /// Passes through to `onSetRating` in the background task.
   /// The extras map must *only* contain primitive types!
-  static Future<void> setRating(Rating rating, [Map<String, dynamic> extras]) async {
+  static Future<void> setRating(Rating rating,
+      [Map<String, dynamic> extras]) async {
     await _channel.invokeMethod('setRating', {
       "rating": rating._toRaw(),
       "extras": extras,
@@ -714,7 +733,8 @@ class AudioService {
 /// broadcast state changes to any UI that may be connected, and to also handle
 /// playback actions initiated by the UI.
 class AudioServiceBackground {
-  static final PlaybackState _noneState = PlaybackState(basicState: BasicPlaybackState.none, actions: Set());
+  static final PlaybackState _noneState =
+      PlaybackState(basicState: BasicPlaybackState.none, actions: Set());
   static MethodChannel _backgroundChannel;
   static PlaybackState _state = _noneState;
   static MediaItem _mediaItem;
@@ -733,7 +753,8 @@ class AudioServiceBackground {
   /// of the task, as well as any requests by the client to play, pause and
   /// otherwise control audio playback.
   static Future<void> run(BackgroundAudioTask taskBuilder()) async {
-    _backgroundChannel = const MethodChannel('ryanheise.com/audioServiceBackground');
+    _backgroundChannel =
+        const MethodChannel('ryanheise.com/audioServiceBackground');
     WidgetsFlutterBinding.ensureInitialized();
     final task = taskBuilder();
     _cacheManager = task.cacheManager;
@@ -822,11 +843,13 @@ class AudioServiceBackground {
           task.onSeekTo(pos);
           break;
         case 'onSetRating':
-          task.onSetRating(Rating._fromRaw(call.arguments[0]), call.arguments[1]);
+          task.onSetRating(
+              Rating._fromRaw(call.arguments[0]), call.arguments[1]);
           break;
         default:
           if (call.method.startsWith(_CUSTOM_PREFIX)) {
-            task.onCustomAction(call.method.substring(_CUSTOM_PREFIX.length), call.arguments);
+            task.onCustomAction(
+                call.method.substring(_CUSTOM_PREFIX.length), call.arguments);
           }
           break;
       }
@@ -899,7 +922,8 @@ class AudioServiceBackground {
 
   /// Sets the current queue and notifies all clients.
   static Future<void> setQueue(List<MediaItem> queue) async {
-    await _backgroundChannel.invokeMethod('setQueue', queue.map(_mediaItem2raw).toList());
+    await _backgroundChannel.invokeMethod(
+        'setQueue', queue.map(_mediaItem2raw).toList());
   }
 
   /// Sets the currently playing media item and notifies all clients.
@@ -937,8 +961,10 @@ class AudioServiceBackground {
   /// changed.
   ///
   /// If [parentMediaId] is unspecified, the root parent will be used.
-  static Future<void> notifyChildrenChanged([String parentMediaId = AudioService.MEDIA_ROOT_ID]) async {
-    await _backgroundChannel.invokeMethod('notifyChildrenChanged', parentMediaId);
+  static Future<void> notifyChildrenChanged(
+      [String parentMediaId = AudioService.MEDIA_ROOT_ID]) async {
+    await _backgroundChannel.invokeMethod(
+        'notifyChildrenChanged', parentMediaId);
   }
 
   /// In Android, forces media button events to be routed to your active media
