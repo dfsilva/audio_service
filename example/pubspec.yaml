@@ -10,9 +10,9 @@ dependencies:
     sdk: flutter
 
   path_provider: ^1.5.1
-  just_audio: ^0.0.6
+  just_audio: ^0.1.5
   flutter_tts: ^0.8.5
-  rxdart: ^0.23.1
+  rxdart: ^0.24.0
   audio_service:
     path: ../
 
