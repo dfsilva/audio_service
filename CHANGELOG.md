@@ -1,3 +1,20 @@
+## 0.7.2
+
+* Shutdown background task if task killed by IO (Android).
+* Bug fixes and dependency updates.
+
+## 0.7.1
+
+* Add AudioServiceWidget to auto-manage connections.
+* Allow file URIs for artUri.
+
+## 0.7.0
+
+* Support skip forward/backward in command center (iOS).
+* Add 'extras' field to MediaItem.
+* Artwork caching and preloading supported on Android+iOS.
+* Bug fixes.
+
 ## 0.6.2
 
 * Bug fixes.
