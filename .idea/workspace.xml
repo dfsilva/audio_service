@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cec1e7f7-75f1-4c74-b170-418f2e526870" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -98,7 +97,21 @@
       <option name="project" value="LOCAL" />
       <updated>1585827296500</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Merge remote-tracking branch 'upstream/master' into merge4&#10;&#10;# Conflicts:&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioService.java&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java&#10;#&#9;pubspec.yaml">
+      <created>1588850672379</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1588850672379</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Merge remote-tracking branch 'upstream/master' into merge4&#10;&#10;# Conflicts:&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioService.java&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java&#10;#&#9;pubspec.yaml">
+      <created>1588850677690</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1588850677690</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -132,6 +145,7 @@
     <MESSAGE value="Merge branch 'master' of https://github.com/ryanheise/audio_service&#10;&#10;# Conflicts:&#10;#&#9;example/lib/main.dart" />
     <MESSAGE value="Merge branch 'master' of https://github.com/ryanheise/audio_service&#10;&#10;# Conflicts:&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java&#10;#&#9;lib/audio_service.dart" />
     <MESSAGE value="Merge remote-tracking branch 'upstream/master' into merge1&#10;&#10;# Conflicts:&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioService.java&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java&#10;#&#9;example/.flutter-plugins-dependencies&#10;#&#9;lib/audio_service.dart" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'upstream/master' into merge1&#10;&#10;# Conflicts:&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioService.java&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java&#10;#&#9;example/.flutter-plugins-dependencies&#10;#&#9;lib/audio_service.dart" />
+    <MESSAGE value="Merge remote-tracking branch 'upstream/master' into merge4&#10;&#10;# Conflicts:&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioService.java&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java&#10;#&#9;pubspec.yaml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'upstream/master' into merge4&#10;&#10;# Conflicts:&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioService.java&#10;#&#9;android/src/main/java/com/ryanheise/audioservice/AudioServicePlugin.java&#10;#&#9;pubspec.yaml" />
   </component>
 </project>
