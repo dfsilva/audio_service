@@ -80,6 +80,8 @@ public class AudioServicePlugin implements FlutterPlugin, ActivityAware {
 	private static String subscribedParentMediaId;
 	private static long bootTime;
 
+	private static volatile Map<String, Object> initParams;
+
 	static {
 		bootTime = System.currentTimeMillis() - SystemClock.elapsedRealtime();
 	}
@@ -264,6 +266,8 @@ public class AudioServicePlugin implements FlutterPlugin, ActivityAware {
 				final Map<String, Double> artDownscaleSizeMap = (Map)arguments.get("androidArtDownscaleSize");
 				final Size artDownscaleSize = artDownscaleSizeMap == null ? null
 					: new Size((int)Math.round(artDownscaleSizeMap.get("width")), (int)Math.round(artDownscaleSizeMap.get("height")));
+
+				initParams = (Map<String, Object>) arguments.get("initParams");
 
 				final String appBundlePath = FlutterMain.findAppBundlePath(context.getApplicationContext());
 				backgroundHandler = new BackgroundHandler(callbackHandle, appBundlePath, enableQueue);
@@ -658,7 +662,7 @@ public class AudioServicePlugin implements FlutterPlugin, ActivityAware {
 			Context context = AudioService.instance;
 			switch (call.method) {
 			case "ready":
-				result.success(true);
+				result.success(initParams);
 				sendStartResult(true);
 				// If the client subscribed to browse children before we
 				// started, process the pending request.
